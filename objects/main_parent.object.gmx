@@ -30,17 +30,19 @@
 randomize();
 show_debug_overlay(true);
 
-//Entities
+//How many entities we will skip mutation
+    skip_mutate_count = 2;
+    
     entity_count = 15;
     entity_object = noone;
     entity_spawn_x = -1;
     entity_spawn_y = -1;
     entities[0] = -1;
     
-//Mutation
-    skip_mutate_count = 2;
+///How many entities are we randomizing weights    
     random_mutate_count = 2;
     balanced_fitness = 1.0;
+    mutation_rate = 0.2;
     
 //Data
     generation = 0;
@@ -137,6 +139,7 @@ graph_h_cur = nn_graph_create(20,room_height-20, 8, -50, 200);
           <argument>
             <kind>1</kind>
             <string>///Control Game Speed
+
 
 if(keyboard_check_pressed(vk_right))
     room_speed += 10;
@@ -315,6 +318,9 @@ var _entities_count = array_length_1d(entities)-1;
         //Mutate
         } else {
             with(entities[i]){
+                //Use common mutate rate
+                mutation_rate = other.mutation_rate;
+
                 nn_mutate_weight();
                 nn_mutate_bias();
                 
@@ -396,7 +402,7 @@ var count = 0;
 with(entity_object){count += !stop;}
 draw_text(10, 50, "Instance count: "+string(count));
 draw_text(10, 70, "Highest fitness: "+string(highest_fitness));
-draw_text(10, 90, "Mutation rate: "+string(entities[0].mutation_rate*100)+"%");
+draw_text(10, 90, "Mutation rate: "+string(mutation_rate*100)+"%");
 </string>
           </argument>
         </arguments>

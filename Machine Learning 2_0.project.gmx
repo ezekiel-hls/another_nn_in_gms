@@ -63,8 +63,8 @@
     </objects>
     <objects name="Auto Car">
       <object>objects\main_autocar</object>
-      <object>objects\obj_wall_hex</object>
       <object>objects\obj_autocar</object>
+      <object>objects\obj_wall_hex</object>
     </objects>
   </objects>
   <rooms name="rooms">

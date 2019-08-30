@@ -28,54 +28,19 @@
             <string>///Initialize
 event_inherited();
 
-//Entities
+//Spawn more cars
     entity_object = obj_autocar;
     entity_count = 20;
     entity_spawn_x = obj_autocar.x;
     entity_spawn_y = obj_autocar.y;
 
-//Mutation
-    skip_mutate_count = 1;
-    random_mutate_count = 4;
-    balanced_fitness = 400.0;
+//How many entities are we randomizing weights    
+    random_mutate_count = 2;
+    balanced_fitness = 10000.0;
+    mutation_rate = 0.4;
     
-    lap_time = 0;
-    
-//Spawn entities
+//Spaw entities
     event_user(15);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Timer
-event_inherited();
-
-///Time the cars
-    if(lap_time &gt; room_speed*10){
-        with(obj_nn_entity){
-            stop = true;
-        }
-    } else {
-        lap_time++;
-    }
 </string>
           </argument>
         </arguments>
@@ -102,11 +67,40 @@ event_inherited();
 
 event_inherited();
 
-lap_time = 0;
-
 with(entity_object){
     image_angle = 90;
     last_moved_timing = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Entity detection line
+with(entities[entity_count-1]){
+    var _ln = 60;
+    draw_line(x, y, x+lengthdir_x(_ln,image_angle), y+lengthdir_y(_ln,image_angle));
+    draw_line(x, y, x+lengthdir_x(_ln,image_angle+45), y+lengthdir_y(_ln,image_angle+45));
+    draw_line(x, y, x+lengthdir_x(_ln,image_angle-45), y+lengthdir_y(_ln,image_angle-45));
+    
+    draw_text(x,y,nn_get_output(0));
 }
 </string>
           </argument>
