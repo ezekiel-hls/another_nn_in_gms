@@ -31,23 +31,21 @@ randomize();
 show_debug_overlay(true);
 
 //How many entities we will skip mutation
-    skip_mutate_count = 2;
-    
     entity_count = 15;
     entity_object = noone;
     entity_spawn_x = -1;
     entity_spawn_y = -1;
     entities[0] = -1;
     
-///How many entities are we randomizing weights    
+///How many entities are we randomizing weights  
+    skip_mutate_count = 2;
     random_mutate_count = 2;
     balanced_fitness = 1.0;
-    mutation_rate = 0.2;
     
 //Data
     generation = 0;
     net_fitness = 0;
-    highest_fitness = -99;
+    highest_fitness = -9999999;
 </string>
           </argument>
         </arguments>
@@ -202,13 +200,22 @@ generation++;
 
 //Sort entities
     event_user(0);
-    
+
 //Update data    
     with(entity_object){
         if(fitness &gt; other.highest_fitness)
             other.highest_fitness = fitness;
     }
-
+    
+//Control utation Rate    
+    if(highest_fitness &gt;= balanced_fitness){
+        random_mutate_count = 0;
+    }
+    var _decr = 1.0-(balanced_fitness-highest_fitness)/balanced_fitness*0.1;
+    with(entity_object){
+        //mutation_rate *= _decr;
+    }
+    
 //Visualization
     var most_fit = entities[array_length_1d(entities)-1];
     nn_graph_create_add_bar(graph_h_cur, most_fit.fitness);
@@ -217,7 +224,7 @@ generation++;
     nn_visual_destroy();
     nn_visual_create(450, 50, most_fit.inputs, most_fit.weights, most_fit.output_weights);
             
-//Mutate weights    
+//Mutate entities    
     event_user(1);
     
 //Reset position    
@@ -282,18 +289,18 @@ var _entities_count = array_length_1d(entities)-1;
 
 //Save the best fit neural network data
     var m =_entities_count; //With highest fitness
-    var predecessor = entities[m];
-    if(predecessor.fitness &gt;= highest_fitness){
-        nn_ctrl_save_best(predecessor, id);
+    var _alpha = entities[m];
+    if(_alpha.fitness &gt;= highest_fitness){
+        nn_ctrl_save_best(_alpha, id);
         
-        predecessor.image_blend = c_white;
+        _alpha.image_blend = c_white;
     }
     
 //Copy best genes
     for(var i=0; i&lt;_entities_count-1; i++){ //Don't include the highest fitness entity
         //Copy the highest fitness
         with(entities[i]){
-            nn_ctrl_copy_best(other.id, id);
+            nn_ctrl_copy_best(other, id);
             
             image_blend = c_white;
         }
@@ -307,8 +314,8 @@ var _entities_count = array_length_1d(entities)-1;
         //Randomize weights
         if(i &lt; _rand_count){
             with(entities[i]){
-                nn_random_weight();
-                nn_random_bias();
+                nn_randomize_weight();
+                nn_randomize_bias();
                 
                 //Color random
                 color_hue = 10;//irandom(255);
@@ -318,9 +325,6 @@ var _entities_count = array_length_1d(entities)-1;
         //Mutate
         } else {
             with(entities[i]){
-                //Use common mutate rate
-                mutation_rate = other.mutation_rate;
-
                 nn_mutate_weight();
                 nn_mutate_bias();
                 
@@ -402,7 +406,7 @@ var count = 0;
 with(entity_object){count += !stop;}
 draw_text(10, 50, "Instance count: "+string(count));
 draw_text(10, 70, "Highest fitness: "+string(highest_fitness));
-draw_text(10, 90, "Mutation rate: "+string(mutation_rate*100)+"%");
+draw_text(10, 90, "Mutation rate: "+string(entity_object.mutation_rate*100)+"%");
 </string>
           </argument>
         </arguments>

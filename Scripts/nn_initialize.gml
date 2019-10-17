@@ -14,3 +14,12 @@
 //Vars    
     fitness = 0;
     stop = false;
+    
+    /*
+    layer_count = 0;
+    layer_activation[0] = 0;
+    layer_size[0] = 0;
+    
+    neuron [0, 0] = 0;
+    weights[0, 0] = 0;
+    bias[0, 0] = 0;

@@ -29,7 +29,7 @@
 event_inherited();
 
 //Spawn more cars
-    entity_object = entity_autocar;
+    entity_object = entity_shoot_defender;
     entity_count = 20;
     entity_spawn_x = entity_object.x;
     entity_spawn_y = entity_object.y;
@@ -38,11 +38,34 @@ event_inherited();
     skip_mutate_count = 1;
     random_mutate_count = 5;
     balanced_fitness = 10000.0;
-    
-    lap_time = 0;
+
     
 //Spaw entities
     event_user(15);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///EVENT_USER 2
+event_user(2);
 </string>
           </argument>
         </arguments>
@@ -100,75 +123,13 @@ if(lap_time &gt; room_speed*8){
 
 event_inherited();
 
-lap_time = 0;
-
 with(entity_object){
-    image_angle = 90;
-    last_moved_timing = 0;
+    spd = 0;
+    dir = 0;
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>event_inherited();
 
-var _sp = 0;
-with(entity_object){
-    if(real_speed &gt; _sp){
-        _sp = real_speed;
-    }
-}
-draw_text(10, 120, "Highest speed: "+string(_sp)+"px/s");
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Entity detection line
-with(entities[entity_count-1]){
-    var _in;
-    var _xx;
-    var _yy;
-    for(var i=0; i&lt;array_height_2d(sensor); i++){
-        _xx = lengthdir_x(sensor[i, 0],image_angle+sensor[i, 1]);
-        _yy = lengthdir_y(sensor[i, 0],image_angle+sensor[i, 1]);
-        draw_line(x, y, x+_xx, y+_yy);
-    }
+with(obj_spaceship_bullet){
+    instance_destroy();
 }
 </string>
           </argument>

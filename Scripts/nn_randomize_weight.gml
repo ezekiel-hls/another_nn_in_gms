@@ -1,4 +1,4 @@
-///nn_random_weight()
+///nn_randomize_weight()
 /*
     Randomize all weights on the hidden layer and ouput layer
 

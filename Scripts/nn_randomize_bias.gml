@@ -1,4 +1,4 @@
-///nn_random_bias()
+///nn_randomize_bias()
 /*
     Randomize all bias on the hidden layer and ouput layer where each nodes has it own bias
 
@@ -12,10 +12,10 @@ var ol = array_height_2d(output_weights);
 
 //Bias for hidden layer
     for(var i=0; i<hl; i++){
-        bias[i] = random_range(-0.5, 0.5);
+        bias[i] = random_range(-1, 1);
     }
     
 //Bias for output
     for(var i=0; i<ol; i++){
-        output_bias[i] = random_range(-0.5, 0.5);
+        output_bias[i] = random_range(-1, 1);
     }    

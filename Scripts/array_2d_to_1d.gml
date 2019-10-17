@@ -1,5 +1,7 @@
 ///array_2d_to_1d(array, index);
-
+/*
+    Copy a row in a 2d array to a 1d
+*/
 
 var _arr = argument0;
 var _ind = argument1;

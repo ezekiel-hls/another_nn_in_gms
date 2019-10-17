@@ -12,11 +12,25 @@
     </sprites>
     <sprite>sprites\spr_hexagon</sprite>
     <sprite>sprites\spr_autocar</sprite>
+    <sprite>sprites\spr_shoot_attack</sprite>
+    <sprite>sprites\spr_shoot_defend</sprite>
+    <sprite>sprites\spr_shoot_bullet</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="Neural Network">
+      <scripts name="Functions">
+        <script>scripts\nn_initialize.gml</script>
+        <script>scripts\nn_create_network.gml</script>
+        <script>scripts\nn_randomize_weight.gml</script>
+        <script>scripts\nn_randomize_bias.gml</script>
+        <script>scripts\nn_mutate_weight.gml</script>
+        <script>scripts\nn_mutate_bias.gml</script>
+        <script>scripts\nn_feed_forward.gml</script>
+        <script>scripts\nn_get_output.gml</script>
+        <script>scripts\nn_set_input.gml</script>
+      </scripts>
       <scripts name="Visualize">
         <script>scripts\nn_visual_create.gml</script>
         <script>scripts\nn_visual_destroy.gml</script>
@@ -24,30 +38,28 @@
         <script>scripts\nn_graph_create_add_bar.gml</script>
         <script>scripts\nn_graph_set_color.gml</script>
       </scripts>
-      <scripts name="Functions">
-        <script>scripts\nn_initialize.gml</script>
-        <script>scripts\nn_create_network.gml</script>
-        <script>scripts\nn_random_weight.gml</script>
-        <script>scripts\nn_random_bias.gml</script>
-        <script>scripts\nn_mutate_weight.gml</script>
-        <script>scripts\nn_mutate_bias.gml</script>
-        <script>scripts\nn_feed_forward.gml</script>
-        <script>scripts\nn_get_output.gml</script>
-        <script>scripts\nn_set_input.gml</script>
-        <script>scripts\nn_ctrl_save_best.gml</script>
-        <script>scripts\nn_ctrl_copy_best.gml</script>
+      <scripts name="Activation">
+        <script>scripts\normalize.gml</script>
+        <script>scripts\sigmoid.gml</script>
+        <script>scripts\tanh.gml</script>
+        <script>scripts\lkrelu.gml</script>
       </scripts>
-    </scripts>
-    <scripts name="Math">
-      <script>scripts\normalize.gml</script>
-      <script>scripts\sigmoid.gml</script>
-      <script>scripts\tanh.gml</script>
-      <script>scripts\lkrelu.gml</script>
     </scripts>
     <scripts name="Helper">
       <script>scripts\array_2d_to_1d.gml</script>
+      <script>scripts\array_copy_1d.gml</script>
+      <script>scripts\array_copy_2d.gml</script>
       <script>scripts\mutate.gml</script>
       <script>scripts\collision_distance.gml</script>
+    </scripts>
+    <scripts name="Controller">
+      <script>scripts\nn_ctrl_copy_best.gml</script>
+      <script>scripts\nn_ctrl_save_best.gml</script>
+    </scripts>
+    <scripts name="Misc">
+      <script>scripts\move_to_nearest.gml</script>
+      <script>scripts\enemy_ai_state_loot.gml</script>
+      <script>scripts\enemy_ai_state_attack.gml</script>
     </scripts>
   </scripts>
   <objects name="objects">
@@ -59,16 +71,26 @@
     </objects>
     <objects name="NN Main">
       <object>objects\main_parent</object>
-      <object>objects\obj_nn_entity</object>
+      <object>objects\entity_parent</object>
     </objects>
     <objects name="Auto Car">
       <object>objects\main_autocar</object>
-      <object>objects\obj_autocar</object>
+      <object>objects\entity_autocar</object>
+      <object>objects\entity_autocar_adv</object>
       <object>objects\obj_wall_hex</object>
     </objects>
+    <objects name="State AI">
+      <object>objects\main_state_controller</object>
+      <object>objects\obj_enemy_ai</object>
+      <object>objects\obj_food</object>
+      <object>objects\obj_player</object>
+    </objects>
+    <object>objects\nn_test</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_pathfinding</room>
+    <room>rooms\rm_nn_test</room>
+    <room>rooms\rm_state_ai</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>

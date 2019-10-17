@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>main_parent</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,24 +25,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Initialize
-event_inherited();
+            <string>///INITIALIZE
 
-//Spawn more cars
-    entity_object = entity_autocar;
-    entity_count = 20;
-    entity_spawn_x = entity_object.x;
-    entity_spawn_y = entity_object.y;
 
-//How many entities are we randomizing weights    
-    skip_mutate_count = 1;
-    random_mutate_count = 5;
-    balanced_fitness = 10000.0;
+//=== Object Properties
+//Properties
+
+    //Because color is fun!
+    color_hue = irandom(255);
+    image_blend = make_colour_hsv(color_hue, 200, 250);
     
-    lap_time = 0;
+//===== Nerual Network
+    nn_initialize(lkrelu, 0.4);
     
-//Spaw entities
-    event_user(15);
+//===== Start
+    nn_create_network(6, 4, 3);
+    nn_randomize_weight();
+    nn_randomize_bias();
 </string>
           </argument>
         </arguments>
@@ -65,15 +64,44 @@ event_inherited();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
-/*
-if(lap_time &gt; room_speed*8){
-    with(entity_object){
-        stop = true;    
-    }
-} else {
-    lap_time++;
-}
+            <string>///RUN
+
+//Input
+    event_user(0);
+    
+//Feedforward
+    event_user(1);
+    
+//Fitness    
+    event_user(2);
+    
+//Output    
+    event_user(3);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///OUTPUT
+
+if(stop) exit;
 </string>
           </argument>
         </arguments>
@@ -96,22 +124,17 @@ if(lap_time &gt; room_speed*8){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///RESET
+            <string>///COMPUTE FITNESS
+if(stop) exit;
 
-event_inherited();
-
-lap_time = 0;
-
-with(entity_object){
-    image_angle = 90;
-    last_moved_timing = 0;
-}
+//Set up how you want to compute fitness
+    fitness += 0;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -128,21 +151,18 @@ with(entity_object){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>event_inherited();
+            <string>///FEED FORWARD
 
-var _sp = 0;
-with(entity_object){
-    if(real_speed &gt; _sp){
-        _sp = real_speed;
-    }
-}
-draw_text(10, 120, "Highest speed: "+string(_sp)+"px/s");
+if(stop) exit;   
+    
+//Feed forward:
+    nn_feed_forward();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -159,17 +179,9 @@ draw_text(10, 120, "Highest speed: "+string(_sp)+"px/s");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Entity detection line
-with(entities[entity_count-1]){
-    var _in;
-    var _xx;
-    var _yy;
-    for(var i=0; i&lt;array_height_2d(sensor); i++){
-        _xx = lengthdir_x(sensor[i, 0],image_angle+sensor[i, 1]);
-        _yy = lengthdir_y(sensor[i, 0],image_angle+sensor[i, 1]);
-        draw_line(x, y, x+_xx, y+_yy);
-    }
-}
+            <string>///INPUT
+
+if(stop) exit;
 </string>
           </argument>
         </arguments>
