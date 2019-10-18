@@ -199,7 +199,7 @@
     <instance objName="obj_wall_hex" x="352" y="328" name="inst_545030A4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_hex" x="64" y="352" name="inst_9B6E67C3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_wall_hex" x="624" y="232" name="inst_496807E7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="entity_autocar" x="583" y="199" name="inst_4A86154A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="entity_autocar" x="592" y="216" name="inst_5F4C81E5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

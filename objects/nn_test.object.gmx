@@ -26,20 +26,20 @@
           <argument>
             <kind>1</kind>
             <string>nn_initialize(0, 40);
-nn_add_layer(1, lkrelu);
+/*nn_add_layer(1, lkrelu);
 nn_add_layer(1, lkrelu);
 nn_add_layer(1, lkrelu);
 nn_add_layer(1, lkrelu);
 nn_random_w();
-nn_random_b();
+nn_random_b();*/
 
 neurons[0, 0] = 5;
-nn_ff();
+//nn_ff();
 show_debug_message(neurons[2, 0]);
 show_debug_message("#===#");
 
-nn_mutate_w();
-nn_ff();
+//nn_mutate_w();
+//nn_ff();
 show_debug_message(neurons[2, 0]);
 </string>
           </argument>

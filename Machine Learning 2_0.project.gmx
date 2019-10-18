@@ -76,7 +76,6 @@
     <objects name="Auto Car">
       <object>objects\main_autocar</object>
       <object>objects\entity_autocar</object>
-      <object>objects\entity_autocar_adv</object>
       <object>objects\obj_wall_hex</object>
     </objects>
     <objects name="State AI">

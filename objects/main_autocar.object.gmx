@@ -35,7 +35,7 @@ event_inherited();
     entity_spawn_y = entity_object.y;
 
 //How many entities are we randomizing weights    
-    skip_mutate_count = 1;
+    skip_mutate_count = 2;
     random_mutate_count = 5;
     balanced_fitness = 10000.0;
     

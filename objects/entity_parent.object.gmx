@@ -36,7 +36,7 @@
     image_blend = make_colour_hsv(color_hue, 200, 250);
     
 //===== Nerual Network
-    nn_initialize(lkrelu, 0.4);
+    nn_initialize(lkrelu, 30);
     
 //===== Start
     nn_create_network(6, 4, 3);

@@ -46,6 +46,7 @@ show_debug_overlay(true);
     generation = 0;
     net_fitness = 0;
     highest_fitness = -9999999;
+    most_fit = noone;
 </string>
           </argument>
         </arguments>
@@ -202,30 +203,20 @@ generation++;
     event_user(0);
 
 //Update data    
-    with(entity_object){
-        if(fitness &gt; other.highest_fitness)
-            other.highest_fitness = fitness;
-    }
+    //&lt;&lt;&lt; UPDATE
     
-//Control utation Rate    
-    if(highest_fitness &gt;= balanced_fitness){
-        random_mutate_count = 0;
-    }
-    var _decr = 1.0-(balanced_fitness-highest_fitness)/balanced_fitness*0.1;
-    with(entity_object){
-        //mutation_rate *= _decr;
-    }
+//Control mutation Rate    
+    //&lt;&lt;&lt; UPDATE
+
+//Mutate entities    
+    event_user(1);
     
 //Visualization
-    var most_fit = entities[array_length_1d(entities)-1];
     nn_graph_create_add_bar(graph_h_cur, most_fit.fitness);
     nn_graph_create_add_bar(graph_h_all, highest_fitness);
 
     nn_visual_destroy();
     nn_visual_create(450, 50, most_fit.inputs, most_fit.weights, most_fit.output_weights);
-            
-//Mutate entities    
-    event_user(1);
     
 //Reset position    
     event_user(2);    
@@ -288,20 +279,19 @@ with(entity_object){
 var _entities_count = array_length_1d(entities)-1;
 
 //Save the best fit neural network data
-    var m =_entities_count; //With highest fitness
-    var _alpha = entities[m];
-    if(_alpha.fitness &gt;= highest_fitness){
-        nn_ctrl_save_best(_alpha, id);
-        
-        _alpha.image_blend = c_white;
+    with(entity_object){
+        if(fitness &gt;= other.highest_fitness){
+            other.most_fit = id;
+            other.highest_fitness = fitness;
+        }
     }
+    nn_ctrl_save_best(most_fit);
     
 //Copy best genes
     for(var i=0; i&lt;_entities_count-1; i++){ //Don't include the highest fitness entity
         //Copy the highest fitness
         with(entities[i]){
-            nn_ctrl_copy_best(other, id);
-            
+            nn_ctrl_copy_best(main_parent);
             image_blend = c_white;
         }
     }
